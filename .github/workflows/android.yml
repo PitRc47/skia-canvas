@@ -28,7 +28,7 @@ jobs:
             python3 \
             libfontconfig1-dev \
             libfreetype6-dev \
-            libgl1-mesa-dev
+            libgl1-mesa-dev \
             clang \
             lld
       
