@@ -21,7 +21,7 @@ jobs:
       
       - run: |
           sudo apt-get update
-          sudo apt-get install -yqq --no-install-recommends \
+          sudo apt-get install -y\
             git \
             gcc-multilib \
             g++-multilib \
@@ -59,3 +59,7 @@ jobs:
           python3 --version
           aarch64-linux-android27-clang --version
           ninja --version
+      
+      - name: Build
+        run: |
+          npm run build
