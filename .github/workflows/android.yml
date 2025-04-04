@@ -1,0 +1,41 @@
+name: Android
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+env:
+  CARGO_TERM_COLOR: always
+  ANDROID_HOME: ${{github.workspace}}/android-sdk
+  ANDROID_NDK_HOME: ${{github.workspace}}/android-ndk-r27c
+
+jobs:
+  v8a:
+    run-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      
+      - run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential git python gcc-multilib g++-multilib 
+      
+      - name: Install Android Tools
+        run: |
+          wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip
+          unzip commandlinetools-linux-8512546_latest.zip -d $ANDROID_HOME
+          yes | $ANDROID_HOME/cmdline-tools/bin/sdkmanager --sdk_root=${ANDROID_HOME} "platform-tools" "build-tools;33.0.2" "platforms;android-35"
+          wget https://googledownloads.cn/android/repository/android-ndk-r27c-linux.zip
+          unzip android-ndk-r27c-linux.zip -d ${{github.workspace}}
+
+      - name: Setup Rust
+        uses: moonrepo/setup-rust@v1
+        with:
+          targets: 'aarch64-linux-android'
+      
+      - name: Test Clang
+        run: |
+          export PATH=$PATH:$ANDROID_NDK_HOME
+          export CC_aarch64_linux_android=aarch64-linux-android27-clang
+          export CXX_aarch64_linux_android=aarch64-linux-android27-clang++
+          export AR_aarch64_linux_android=llvm-ar
+          aarch64-linux-android27-clang --version
