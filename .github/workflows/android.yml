@@ -64,7 +64,7 @@ jobs:
           aarch64-linux-android27-clang --version
           python3 --version
           ninja --version
-          nodejs --version
+          node --version
           cargo --version
           rustc --version
       
