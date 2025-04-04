@@ -8,6 +8,11 @@ env:
   CARGO_TERM_COLOR: always
   ANDROID_HOME: ${{github.workspace}}/android-sdk
   ANDROID_NDK_HOME: ${{github.workspace}}/android-ndk-r27c
+  PATH: $PATH:$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin
+  CC_aarch64_linux_android: aarch64-linux-android27-clang
+  CXX_aarch64_linux_android: aarch64-linux-android27-clang++
+  AR_aarch64_linux_android: llvm-ar
+  CARGO_TARGET_AARCH64_LINUX_ANDROID_LINKER: aarch64-linux-android27-clang
 
 jobs:
   v8a:
@@ -30,7 +35,11 @@ jobs:
             libfreetype6-dev \
             libgl1-mesa-dev \
             clang \
-            lld
+            lld \
+            fontconfig \
+            openssl \
+            libssl-dev \
+            libfontconfig1-dev 
       
       - name: Install Android Tools
         run: |
@@ -47,8 +56,6 @@ jobs:
       
       - name: Test Clang
         run: |
-          export PATH=$PATH:$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/
-          export CC_aarch64_linux_android=aarch64-linux-android27-clang
-          export CXX_aarch64_linux_android=aarch64-linux-android27-clang++
-          export AR_aarch64_linux_android=llvm-ar
+          python3 --version
           aarch64-linux-android27-clang --version
+          ninja --version
