@@ -55,8 +55,7 @@ jobs:
       
       - name: Test Clang
         run: |
-          echo "PATH=$PATH:$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/" >> $GITHUB_ENV
-          
+          export PATH=$PATH:$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/
           python3 --version
           aarch64-linux-android27-clang --version
           ninja --version
