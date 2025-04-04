@@ -30,6 +30,7 @@ jobs:
             ninja-build \
             pkg-config \
             python3 \
+            python3-pip \
             libfontconfig1-dev \
             libfreetype6-dev \
             libgl1-mesa-dev \
@@ -47,19 +48,27 @@ jobs:
           yes | $ANDROID_HOME/cmdline-tools/bin/sdkmanager --sdk_root=${ANDROID_HOME} "platform-tools" "build-tools;33.0.2" "platforms;android-35"
           wget https://googledownloads.cn/android/repository/android-ndk-r27c-linux.zip
           unzip android-ndk-r27c-linux.zip -d ${{github.workspace}}
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: latest
 
       - name: Setup Rust
         uses: moonrepo/setup-rust@v1
         with:
           targets: 'aarch64-linux-android'
       
-      - name: Test Clang
+      - name: Test Toolchains
         run: |
           export PATH=$PATH:$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/
-          python3 --version
           aarch64-linux-android27-clang --version
+          python3 --version
           ninja --version
+          nodejs --version
+          cargo --version
+          rustc --version
       
       - name: Build
         run: |
-          npm run build
+          cargo install cargo-cp-artifact
+          npm run build -- --release
