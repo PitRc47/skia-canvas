@@ -87,7 +87,7 @@ jobs:
       
       - name: Build Nodejs Android
         run: |
-          nodejs-mobile/tools/android_build.sh $ANDROID_NDK_HOME 27 arm64
+          nodejs-mobile/tools/android_build.sh $ANDROID_NDK_HOME arm64
           
       - name: Upload Nodejs Android Artifact
         uses: actions/upload-artifact@v4
