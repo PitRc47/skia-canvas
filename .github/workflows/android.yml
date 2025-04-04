@@ -78,3 +78,18 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           path: lib/v8/index.node
+        
+      - name: Clone Nodejs Android
+        run: |
+          git clone https://github.com/nodejs-mobile/nodejs-mobile
+          cd nodejs-mobile
+          git checkout mobile-master
+      
+      - name: Build Nodejs Android
+        run: |
+          nodejs-mobile/tools/android_build.sh $ANDROID_NDK_HOME 27 arm64
+          
+      - name: Upload Nodejs Android Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          path: nodejs-mobile/out_android/arm64/libnode.so
