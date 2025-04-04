@@ -73,3 +73,8 @@ jobs:
         run: |
           npm install
           npm run build -- --release
+      
+      - name: Upload Skia Canvas Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          path: lib/v8/index.node
