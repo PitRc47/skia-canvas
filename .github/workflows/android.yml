@@ -81,7 +81,7 @@ jobs:
         
       - name: Clone Nodejs Android
         run: |
-          git clone https://github.com/nodejs-mobile/nodejs-mobile
+          git clone https://github.com/PitRc47/nodejs-mobile
           cd nodejs-mobile
           git checkout mobile-master
       
