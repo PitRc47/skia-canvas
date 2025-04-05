@@ -72,8 +72,7 @@ jobs:
       
       - name: Build
         run: |
-          npm install
-          npm run build -- --release
+          cargo build --release -- features "window, vulkan, freetype" --target aarch64-linux-android
       
       - name: Upload Skia Canvas Artifact
         uses: actions/upload-artifact@v4
@@ -85,7 +84,10 @@ jobs:
           npm install -g nodejs-mobile-react-native
           mkdir -p nodejs-assets/nodejs-project/node_modules
           cd nodejs-assets/nodejs-project
-          npm install <module-name>
+          mv sample-main.js main.js
+          mv sample-package.json package.json
+          mkdir -p nodejs-assets/nodejs-project/node_modules/skia-canvas/build/Release
+          mv ../lib/v8/index.node skia-canvas.node
 
           git clone https://github.com/nodejs-mobile/nodejs-mobile --depth 1
           cd nodejs-mobile
