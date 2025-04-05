@@ -12,7 +12,6 @@ env:
   CXX_aarch64_linux_android: aarch64-linux-android27-clang++
   AR_aarch64_linux_android: llvm-ar
   CARGO_TARGET_AARCH64_LINUX_ANDROID_LINKER: aarch64-linux-android27-clang
-  CARGO_TERM_VERBOSE: true
 
 jobs:
   v8a:
