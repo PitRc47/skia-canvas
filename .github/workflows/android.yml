@@ -74,7 +74,6 @@ jobs:
         run: |
           npm install
           npm run build -- --release
-          npm install
       
       - name: Upload Skia Canvas Artifact
         uses: actions/upload-artifact@v4
@@ -83,6 +82,11 @@ jobs:
 
       - name: Build Nodejs Android
         run: |
+          npm install -g nodejs-mobile-react-native
+          mkdir -p nodejs-assets/nodejs-project/node_modules
+          cd nodejs-assets/nodejs-project
+          npm install <module-name>
+
           git clone https://github.com/nodejs-mobile/nodejs-mobile --depth 1
           cd nodejs-mobile
           tools/android_build.sh $ANDROID_NDK_HOME 27 arm64
